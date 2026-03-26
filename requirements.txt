@@ -1,0 +1,9 @@
+# Arch
+dependency-injector==4.41.0
+pydantic==2.6.4
+python-dotenv==1.0.1
+
+# Test and statis analyzsis
+pytest==8.1.1
+black==24.3.0
+flake8==7.0.0
