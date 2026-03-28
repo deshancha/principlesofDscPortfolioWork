@@ -10,5 +10,13 @@ class Messages:
     ERR_S3_UPLOAD_FAIL = "Upload Failed"
 
     # Yahoo Finance
-    INFO_YF_ATTEMPT = "Fetching Yahoo Finance data for {ticker}..."
+    INFO_YF_ATTEMPT = "-Fetching YahooFinance data for {ticker}-"
     ERR_YF_FAIL = "Yahoo Finance Data Fetch Failed"
+
+    # Yahoo Finance Parallel
+    INFO_YF_PARALLEL_ATTEMPT = "Fetching data parallel for tickers: {tickers}"
+    INFO_YF_PARALLEL_OK = "Successfuly fetched {count} records for {ticker}"
+    INFO_YF_PARALLEL_COMPLETED = "Parallel Fetch completed. Tickers Count: {count}"
+    ERR_END_DATE_MISSING = "Error: END_DATE is missing in .env file"
+    ERR_START_DATE_MISSING = "Error: START_DATE is missing in .env file"
+    ERR_TICKERS_MISSING = "Error: YAHOO_FINANCE_TICKERS is missing in .env file"
