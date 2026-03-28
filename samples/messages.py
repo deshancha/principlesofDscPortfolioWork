@@ -1,0 +1,14 @@
+class Messages:
+    # S3
+    ERR_BUCKET_MISSING = "Error: AWS_S3_BUCKET_NAME is missing in .env file"
+    INFO_S3_BUCKET = "S3 Bucket: '{bucket_name}'..."
+    INFO_S3_UPLOAD_ATTEMPT = "S3 Upload data to Bucket:{bucket_name} -> Key:{test_key}"
+    INFO_S3_UPLOAD_OK = "S3 Upload OK"
+    INFO_S3_DOWNLOAD_ATTEMPT = "S3 Start Download Bucket:{bucket_name} -> Key:{test_key}"
+    INFO_S3_DOWNLOAD_OK = "S3 Download OK -> {data}"
+    ERR_S3_DOWNLOAD_FAIL = "S3 Download Failed"
+    ERR_S3_UPLOAD_FAIL = "Upload Failed"
+
+    # Yahoo Finance
+    INFO_YF_ATTEMPT = "Fetching Yahoo Finance data for {ticker}..."
+    ERR_YF_FAIL = "Yahoo Finance Data Fetch Failed"
