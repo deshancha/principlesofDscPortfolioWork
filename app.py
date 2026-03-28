@@ -38,7 +38,6 @@ def s3_upload_download():
     container = AppContainer()
     container.config.aws.s3_bucket_name.from_env("AWS_S3_BUCKET_NAME")
     container.config.aws.region_name.from_env("AWS_REGION_NAME", "us-east-1")
-    container.config.db.connection_string.from_value("sqlite:///:memory:") # dummy db string just to bypass any validation
     
     # allows use @Inject without supply manually
     container.wire(modules=[__name__])
@@ -78,7 +77,6 @@ def fetch_yahoo_finance_data():
     core_container = AppContainer()
     core_container.config.aws.s3_bucket_name.from_env("AWS_S3_BUCKET_NAME", "dummy_bucket")
     core_container.config.aws.region_name.from_env("AWS_REGION_NAME", "us-east-1")
-    core_container.config.db.connection_string.from_value("sqlite:///:memory:")
     
     logger = core_container.logger()
     
@@ -109,10 +107,10 @@ def main():
     load_dotenv()
     
     # Run S3 test
-    # s3_upload_download()
+    s3_upload_download()
     
     # Run Yahoo Finance test
-    fetch_yahoo_finance_data()
+    # fetch_yahoo_finance_data()
 
 
 if __name__ == "__main__":
