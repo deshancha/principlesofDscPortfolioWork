@@ -31,15 +31,4 @@ class TestCollectMarketDataUseCase:
         assert result == mock_assets
         self.mock_market_client.fetch_daily.assert_called_once_with("AAPL", "2023-01-01", "2023-01-02")
 
-    def test_get_last_fetched_raw_data_forwards_to_client(self):
-        # provide mock data
-        mock_raw = {"meta": "data", "data": []}
-        self.mock_market_client.get_last_fetched_raw_data.return_value = mock_raw
-        
-        # Fetch
-        result = self.usecase.get_last_fetched_raw_data()
-        
-        # Assert
-        assert result == mock_raw
-        self.mock_market_client.get_last_fetched_raw_data.assert_called_once()
 

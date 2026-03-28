@@ -16,10 +16,3 @@ class IMarketDataClient(ABC):
         Fetch daily data
         """
         pass
-    
-    @abstractmethod
-    def get_last_fetched_raw_data(self) -> dict:
-        """
-        Get the last fetched raw data
-        """
-        pass

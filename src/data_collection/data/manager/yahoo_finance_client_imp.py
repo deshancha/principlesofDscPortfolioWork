@@ -2,7 +2,6 @@
 # Created: 2026-03-28
 
 import yfinance as yf
-from datetime import datetime
 from typing import List
 from data_collection.domain.manager.imarket_data_client import IMarketDataClient
 from data_collection.domain.model.asset_data import AssetData
@@ -20,7 +19,6 @@ class YahooFinanceClientImp(IMarketDataClient):
     Imp of Fetch Market Data with Yahoo Finance.
     """
     def __init__(self, logger: ILogger):
-        self._last_fetched_data = {}
         self.logger = logger
         
     def fetch_daily(self, ticker: str, start_date: str, end_date: str) -> List[AssetData]:
@@ -35,19 +33,7 @@ class YahooFinanceClientImp(IMarketDataClient):
                 return []
                 
             self.logger.info(_Messages.FETCH_SUCCESS.format(record_count=len(df), ticker=ticker))
-            
-            # Temp save last fetched raw data for access
-            self._last_fetched_data = {
-                "meta": {
-                    "source": "yahoo_finance",
-                    "ticker": ticker,
-                    "start_date": start_date,
-                    "end_date": end_date,
-                    "fetched_at": datetime.utcnow().isoformat()
-                },
-                # Pandas serialization trick for raw dumps
-                "data": df.reset_index().to_dict(orient="records")
-            }
+
             
             assets = []
             for index, row in df.iterrows():
@@ -68,6 +54,3 @@ class YahooFinanceClientImp(IMarketDataClient):
         except Exception as e:
             self.logger.error(_Messages.FETCH_ERROR.format(ticker=ticker, error=str(e)))
             raise e
-        
-    def get_last_fetched_raw_data(self) -> dict:
-        return self._last_fetched_data

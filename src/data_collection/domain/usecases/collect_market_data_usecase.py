@@ -12,6 +12,3 @@ class CollectMarketDataUseCase:
     def fetch_daily(self, ticker: str, start_date: str, end_date: str) -> List[AssetData]:
         return self.market_client.fetch_daily(ticker, start_date, end_date)
         
-    def get_last_fetched_raw_data(self) -> dict:
-        return self.market_client.get_last_fetched_raw_data()
-
