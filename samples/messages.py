@@ -19,4 +19,5 @@ class Messages:
     INFO_YF_PARALLEL_COMPLETED = "Parallel Fetch completed. Tickers Count: {count}"
     ERR_END_DATE_MISSING = "Error: END_DATE is missing in .env file"
     ERR_START_DATE_MISSING = "Error: START_DATE is missing in .env file"
+    ERR_TICKER_MISSING = "Error: Ticker is missing in .env file"
     ERR_TICKERS_MISSING = "Error: YAHOO_FINANCE_TICKERS is missing in .env file"

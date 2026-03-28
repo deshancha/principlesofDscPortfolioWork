@@ -8,24 +8,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../s
 from di import AppContainer
 from data_collection.di.container import DataCollectionContainer
 from samples.messages import Messages
-
-def validate_env_variables(tickers_env, start_date, end_date, logger) -> bool:
-    # if tickers_env is empty, exit
-    if not tickers_env:
-        logger.error(Messages.ERR_TICKERS_MISSING)
-        return False
-
-    # if start_date is empty, exit
-    if not start_date:
-        logger.error(Messages.ERR_START_DATE_MISSING)
-        return False
-
-    # if end_date is empty, exit
-    if not end_date:
-        logger.error(Messages.ERR_END_DATE_MISSING)
-        return False
-    
-    return True
+from samples.validators import validate_env_variables
 
 def fetch_yahoo_finance_data_parallel():
     """Retrieve Yahoo Finance data for multiple tickers in parallel"""
@@ -41,7 +24,7 @@ def fetch_yahoo_finance_data_parallel():
     data_container = DataCollectionContainer(core=core_container)
     collect_usecase = data_container.collect_market_data_usecase()
     
-    # Read tickers from environment variable or use defaults
+    # Read config from environment variable
     tickers_env = os.environ.get("YAHOO_FINANCE_TICKERS", "")
     start_date = os.environ.get("START_DATE", "")
     end_date = os.environ.get("END_DATE", "")
