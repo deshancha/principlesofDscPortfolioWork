@@ -1,3 +1,6 @@
+# Author: Chamika Deshan
+# Created: 2026-03-28
+
 from typing import List
 from data_collection.domain.manager.imarket_data_client import IMarketDataClient
 from data_collection.domain.model.asset_data import AssetData

@@ -1,3 +1,6 @@
+# Author: Chamika Deshan
+# Created: 2026-03-28
+
 class Messages:
     # S3
     ERR_BUCKET_MISSING = "Error: AWS_S3_BUCKET_NAME is missing in .env file"

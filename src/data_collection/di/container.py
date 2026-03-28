@@ -1,3 +1,6 @@
+# Author: Chamika Deshan
+# Created: 2026-03-28
+
 from dependency_injector import containers, providers
 from data_collection.data.manager.yahoo_finance_client_imp import YahooFinanceClientImp
 from data_collection.domain.manager.imarket_data_client import IMarketDataClient

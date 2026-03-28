@@ -1,3 +1,6 @@
+# Author: Chamika Deshan
+# Created: 2026-03-28
+
 from abc import ABC, abstractmethod
 from typing import List
 from ..model.asset_data import AssetData

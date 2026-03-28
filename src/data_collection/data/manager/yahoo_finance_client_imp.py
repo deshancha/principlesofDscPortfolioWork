@@ -1,3 +1,6 @@
+# Author: Chamika Deshan
+# Created: 2026-03-28
+
 import yfinance as yf
 from datetime import datetime
 from typing import List
