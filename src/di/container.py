@@ -1,5 +1,7 @@
 from dependency_injector import containers, providers
-from core.util.logger import LoggerFactory, ILogger
+from core.util import LoggerFactory, ILogger
+from core.data.manager import AwsS3StorageImp
+from core.domain.manager import ICloudStorage, IDatabase
 
 class AppContainer(containers.DeclarativeContainer):
     """
@@ -11,4 +13,11 @@ class AppContainer(containers.DeclarativeContainer):
         LoggerFactory.create,
         logger_type="console",  # config.logger_type
         name="App"
+    )
+
+    cloud_storage: providers.Provider[ICloudStorage] = providers.Singleton(
+        AwsS3StorageImp,
+        bucket_name=config.aws.s3_bucket_name,
+        logger=logger,
+        region_name=config.aws.region_name
     )
