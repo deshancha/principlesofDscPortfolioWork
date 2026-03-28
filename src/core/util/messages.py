@@ -8,3 +8,8 @@ class LogMessages:
     S3_UPLOAD_ERROR = "AWS S3 Upload Error: {error}"
     S3_DOWNLOAD_OK = "AWS S3 Download OK: {path_key}"
     S3_DOWNLOAD_ERROR = "AWS S3 Download Error: {error}"
+
+    # RDS Msgs
+    RDS_INSERT_OK = "AWS RDS Insert OK: {table_name}"
+    RDS_INSERT_ERROR = "AWS RDS Insert Error: {error}"
+    
