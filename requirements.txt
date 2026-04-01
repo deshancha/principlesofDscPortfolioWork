@@ -14,4 +14,7 @@ boto3       # aws
 SQLAlchemy  # orm
 psycopg2-binary  # postgresql driver
 pandas      # data processing
+matplotlib  # visualize
+seaborn     # visualize
+scikit-learn # cluster
 
