@@ -4,7 +4,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../src')))
 
-from core.util.logger import LoggerFactory
+from core.util import LoggerFactory
 
 def test_file_logger_write_file(tmp_path, monkeypatch):
     """

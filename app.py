@@ -6,27 +6,53 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'src'
 
 from dotenv import load_dotenv
 from di.container import AppContainer
-from operations import s3_upload_download, fetch_yahoo_finance_data, fetch_yahoo_finance_data_parallel, fetch_and_upload_to_s3, fetch_parallel_and_upload_to_s3, fetch_from_s3_and_store_in_rds, fetch_from_rds_to_pandas, cleanup
+
+def _app_container() -> AppContainer:
+    load_dotenv()
+    container = AppContainer()
+    container.config.from_dict({
+        "aws": {
+            "s3_bucket_name": os.environ["AWS_S3_BUCKET_NAME"],
+            "region_name": os.environ.get("AWS_REGION_NAME", "us-east-1"),
+        },
+        "db": {
+            "connection_string": os.environ["DB_CONNECTION_STRING"],
+        },
+    })
+    return container
 
 def main():
-    # Check for command-line arguments
+    container = _app_container()
+    table_name = os.environ.get("AWS_RDS_TABLE_NAME", "crypto_market_data")
+    tickers_env = os.environ.get("YAHOO_FINANCE_TICKERS", "")
+    start_date = os.environ.get("START_DATE", "")
+    end_date = os.environ.get("END_DATE", "")
+
     if len(sys.argv) > 1:
         arg = sys.argv[1]
-        # Dump RDS table
+        
+        # -1: Dump RDS table
         if arg == "-1":
-            cleanup()
+            usecase = container.table_cleanup_usecase()
+            usecase.execute(table_name)
             return
-        # Fetch from Yfinance and upload to S3
+            
+        # 1: Fetch from YF and upload to S3
         elif arg == "1":
-            fetch_parallel_and_upload_to_s3()
+            usecase = container.fetch_parallel_and_upload_to_s3_usecase()
+            usecase.execute(tickers_env, start_date, end_date)
             return
-        # Fetch from S3 and upload to RDS
+            
+        # 2: Fetch from S3 and upload to RDS
         elif arg == "2":
-            fetch_from_s3_and_store_in_rds()
+            usecase = container.s3_to_rds_usecase()
+            usecase.execute([t.strip() for t in tickers_env.split(",") if t.strip()], table_name)
             return
-        # Fetch from RDS and load to Pandas
+            
+        # 3: Fetch from RDS and load to Pandas
         elif arg == "3":
-            fetch_from_rds_to_pandas(ticker="BTC-USD")
+            usecase = container.rds_to_pandas_usecase()
+            usecase.execute(ticker="BTC-USD", table_name=table_name)
             return
 
 if __name__ == "__main__":

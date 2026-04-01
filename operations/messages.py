@@ -26,16 +26,16 @@ class Messages:
     ERR_TICKERS_MISSING = "Error: YAHOO_FINANCE_TICKERS is missing in .env file"
 
     # S3 -> RDS
-    INFO_S3_RDS_START = "Starting S3 → RDS pipeline for tickers: {tickers}"
+    INFO_S3_RDS_START = "Starting S3 -> RDS pipeline for tickers: {tickers}"
     INFO_S3_RDS_DOWNLOAD_ATTEMPT = "[{ticker}] Downloading s3://market_data/{s3_key}"
     INFO_S3_RDS_DOWNLOAD_OK = "[{ticker}] Downloaded {count} records from S3"
     INFO_S3_RDS_INSERT_OK = "[{ticker}] Inserted {count} records into RDS"
-    INFO_S3_RDS_COMPLETED = "S3 → RDS pipeline complete. OK: {ok}, Failed: {fail}"
+    INFO_S3_RDS_COMPLETED = "S3 -> RDS pipeline complete. OK: {ok}, Failed: {fail}"
     ERR_S3_RDS_EMPTY = "[{ticker}] No data found in S3, skipping"
     ERR_S3_RDS_INSERT_FAIL = "[{ticker}] RDS insert failed"
 
     # RDS -> Pandas
-    INFO_RDS_PANDAS_START = "Starting RDS → Pandas retrieval for ticker: {ticker}"
+    INFO_RDS_PANDAS_START = "Starting RDS -> Pandas retrieval for ticker: {ticker}"
     INFO_RDS_PANDAS_OK = "Successfully loaded {count} records into Pandas DataFrame"
     ERR_RDS_PANDAS_QUERY_FAIL = "RDS query failed for ticker: {ticker}"
     ERR_RDS_PANDAS_EMPTY = "No data found in RDS for ticker: {ticker}"
