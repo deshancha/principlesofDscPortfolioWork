@@ -1,3 +1,4 @@
+
 # Author: Chamika Deshan
 # Created: 2026-03-28
 
@@ -7,27 +8,24 @@ import sys
 # import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from di import AppContainer
-from data_collection.di.container import DataCollectionContainer
-from samples.messages import Messages
-from samples.validators import validate_env_variables_single
+from operations.config import get_container
+from operations.messages import Messages
+from operations.validators import validate_env_variables_single
 
 def fetch_and_upload_to_s3():
-        
-    bucket_name = os.environ.get("AWS_S3_BUCKET_NAME")
+    # AppContainer DI from shared config
+    core_container = get_container()
+    bucket_name = core_container.config.aws.s3_bucket_name()
+    
     if not bucket_name:
         print(Messages.ERR_BUCKET_MISSING)
         sys.exit(1)
 
-    # AppContainer Container DI
-    core_container = AppContainer()
-    core_container.config.aws.s3_bucket_name.from_env("AWS_S3_BUCKET_NAME", "dummy_bucket")
-    core_container.config.aws.region_name.from_env("AWS_REGION_NAME", "us-east-1")
-    
     logger = core_container.logger()
     s3_storage = core_container.cloud_storage()
     
     # Data Collection Container DI
+    from data_collection.di.container import DataCollectionContainer
     data_container = DataCollectionContainer(core=core_container)
     collect_usecase = data_container.collect_market_data_usecase()
     

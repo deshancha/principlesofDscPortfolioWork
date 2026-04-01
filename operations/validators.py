@@ -1,7 +1,7 @@
 # Author: Chamika Deshan
 # Created: 2026-03-28
 
-from samples.messages import Messages
+from operations.messages import Messages
 
 def validate_env_variables(tickers_env, start_date, end_date, logger) -> bool:
     # if tickers_env is empty, exit

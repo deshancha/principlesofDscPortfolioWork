@@ -7,22 +7,20 @@ import sys
 # import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from di import AppContainer
-from samples.messages import Messages
+from operations.config import get_container
+from operations.messages import Messages
 
 def s3_upload_download():
     """Amazon S3 Upload/Download Sample"""
-    bucket_name = os.environ.get("AWS_S3_BUCKET_NAME")
+    # AppContainer DI from shared config
+    container = get_container()
+    bucket_name = container.config.aws.s3_bucket_name()
     
     if not bucket_name:
         print(Messages.ERR_BUCKET_MISSING)
         sys.exit(1)
         
     print(Messages.INFO_S3_BUCKET.format(bucket_name=bucket_name))
-    
-    container = AppContainer()
-    container.config.aws.s3_bucket_name.from_env("AWS_S3_BUCKET_NAME")
-    container.config.aws.region_name.from_env("AWS_REGION_NAME", "us-east-1")
     
     # allows use @Inject without supply manually
     container.wire(modules=[__name__])

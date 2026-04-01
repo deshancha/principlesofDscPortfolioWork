@@ -8,27 +8,14 @@ import pandas as pd
 # import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from di import AppContainer
-from samples.messages import Messages
-
-TABLE_NAME = os.environ.get("AWS_RDS_TABLE_NAME", "crypto_market_data")
-
-def _app_container() -> AppContainer:
-    """DI Container"""
-    container = AppContainer()
-    container.config.from_dict({
-        "db": {
-            "connection_string": os.environ["DB_CONNECTION_STRING"],
-        },
-    })
-    return container
-
+from operations.config import get_container, TABLE_NAME
+from operations.messages import Messages
 
 def fetch_from_rds_to_pandas(ticker: str = "BTC-USD"):
     """
     AWS RDS -> Pandas
     """
-    container = _app_container()
+    container = get_container()
     logger = container.logger()
     database = container.database()
 

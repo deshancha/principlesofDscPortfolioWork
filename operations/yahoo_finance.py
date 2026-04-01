@@ -7,23 +7,19 @@ import sys
 # import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from di import AppContainer
-from data_collection.di.container import DataCollectionContainer
-from samples.messages import Messages
-from samples.messages import Messages
-from samples.validators import validate_env_variables_single
+from operations.config import get_container
+from operations.messages import Messages
+from operations.validators import validate_env_variables_single
 
 def fetch_yahoo_finance_data():
     """Retrieve Yahoo Finance data"""
 
-    # AppContainer Container DI
-    core_container = AppContainer()
-    core_container.config.aws.s3_bucket_name.from_env("AWS_S3_BUCKET_NAME", "dummy_bucket")
-    core_container.config.aws.region_name.from_env("AWS_REGION_NAME", "us-east-1")
-    
+    # AppContainer DI from shared config
+    core_container = get_container()
     logger = core_container.logger()
     
     # Data Collection Container DI
+    from data_collection.di.container import DataCollectionContainer
     data_container = DataCollectionContainer(core=core_container)
     collect_usecase = data_container.collect_market_data_usecase()
     

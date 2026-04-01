@@ -1,3 +1,4 @@
+
 # Author: Chamika Deshan
 # Created: 2026-03-29
 
@@ -8,10 +9,8 @@ import concurrent.futures
 # import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from di import AppContainer
-from samples.messages import Messages
-
-TABLE_NAME = os.environ.get("AWS_RDS_TABLE_NAME", "crypto_market_data")
+from operations.config import get_container, TABLE_NAME
+from operations.messages import Messages
 
 # AssetData -> TABLE_NAME Columns
 TABLE_COLUMNS = {
@@ -24,20 +23,6 @@ TABLE_COLUMNS = {
     "volume":        "BIGINT",
     "source":        "VARCHAR(50)",
 }
-
-def _app_container() -> AppContainer:
-    container = AppContainer()
-    container.config.from_dict({
-        "aws": {
-            "s3_bucket_name": os.environ["AWS_S3_BUCKET_NAME"],
-            "region_name": os.environ.get("AWS_REGION_NAME", "us-east-1"),
-        },
-        "db": {
-            "connection_string": os.environ["DB_CONNECTION_STRING"],
-        },
-    })
-    return container
-
 
 def _process_ticker(ticker: str, s3_storage, database, logger) -> tuple:
     """Get Json Ticker from S3 and add to AWS table"""
@@ -52,7 +37,6 @@ def _process_ticker(ticker: str, s3_storage, database, logger) -> tuple:
 
         logger.info(Messages.INFO_S3_RDS_DOWNLOAD_OK.format(ticker=ticker, count=len(records)))
 
-        database.create_table(TABLE_NAME, TABLE_COLUMNS)
 
         # add the ticker into every record
         for record in records:
@@ -76,6 +60,8 @@ def fetch_from_s3_and_store_in_rds():
     """
     S3 Yfinance Json -> AWS RDS
     """
+    container = get_container()
+
     tickers_env = os.environ.get("YAHOO_FINANCE_TICKERS", "")
     if not tickers_env:
         print(Messages.ERR_TICKERS_MISSING)
@@ -83,12 +69,14 @@ def fetch_from_s3_and_store_in_rds():
 
     tickers = [t.strip() for t in tickers_env.split(",") if t.strip()]
 
-    container = _app_container()
     logger = container.logger()
     s3_storage = container.cloud_storage()
     database = container.database()
 
     logger.info(Messages.INFO_S3_RDS_START.format(tickers=tickers_env))
+
+    # Create table once before starting threads to avoid race condition
+    database.create_table(TABLE_NAME, TABLE_COLUMNS)
 
     results = {}
     with concurrent.futures.ThreadPoolExecutor(max_workers=min(len(tickers), 5)) as executor:
