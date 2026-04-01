@@ -11,6 +11,8 @@ from data_collection.domain.usecases.fetch_parallel_and_upload_to_s3_usecase imp
 from data_collection.domain.usecases.s3_to_rds_usecase import S3ToRDSUseCase
 from data_collection.domain.usecases.rds_to_pandas_usecase import RDSToPandasUseCase
 
+from eda.domain.usecases.data_cleaning_usecase import DataCleaningUseCase
+
 class AppContainer(containers.DeclarativeContainer):
     """
     DI for the app
@@ -72,5 +74,11 @@ class AppContainer(containers.DeclarativeContainer):
     rds_to_pandas_usecase = providers.Factory(
         RDSToPandasUseCase,
         database=database,
+        logger=logger
+    )
+
+    # EDA Use Cases
+    data_cleaning_usecase = providers.Factory(
+        DataCleaningUseCase,
         logger=logger
     )
