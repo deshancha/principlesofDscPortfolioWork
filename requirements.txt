@@ -12,4 +12,6 @@ flake8==7.0.0
 yfinance    # yahoo finance
 boto3       # aws
 SQLAlchemy  # orm
+psycopg2-binary  # postgresql driver
+pandas      # data processing
 
