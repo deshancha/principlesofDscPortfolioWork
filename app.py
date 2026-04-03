@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'src'
 
 from dotenv import load_dotenv
 from di.container import AppContainer
+from agent.trading_agent import TradingAgent
 
 def _app_container() -> AppContainer:
     load_dotenv()
@@ -53,6 +54,18 @@ def main():
         elif arg == "3":
             usecase = container.rds_to_pandas_usecase()
             usecase.execute(ticker="BTC-USD", table_name=table_name)
+            return
+
+        # 4: Trading Agent
+        elif arg == "4":
+            agent = TradingAgent(init_bal=1000)
+            
+            test_tickers = ["BTC-USD", "DOGE-USD", "SOL-USD", "ETH-USD", "BNB-USD"]
+            for coin in test_tickers:
+                try:
+                    agent.analyze_and_trade(coin)
+                except Exception as e:
+                    print(f"Error : {coin}: {e}")
             return
 
 if __name__ == "__main__":

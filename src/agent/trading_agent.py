@@ -54,14 +54,3 @@ class TradingAgent:
             print(f"Balance : {self.init_bal}")
 
         return final_decision
-
-
-if __name__ == "__main__":
-    agent = TradingAgent(init_bal=1000)
-    
-    test_tickers = ["BTC-USD", "DOGE-USD", "SOL-USD", "ETH-USD", "BNB-USD"]
-    for coin in test_tickers:
-        try:
-            agent.analyze_and_trade(coin)
-        except Exception as e:
-            print(f"Error processing {coin}: {e}")
