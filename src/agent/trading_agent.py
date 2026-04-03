@@ -43,9 +43,17 @@ class TradingAgent:
             coin_details=coin_details,
             balance=self.init_bal
         )
+
+        buy_amount = final_decision['buy_amount']
         print(f"Decision: {final_decision['action'].value}")
-        print(f"Buy Amount: ${final_decision['buy_amount']}")
+        print(f"Buy Amount: ${buy_amount}")
         print(f"Reason: {final_decision['reason']}")
+
+        if final_decision['action'] == Action.BUY:
+            self.init_bal -= buy_amount
+            print(f"Balance : {self.init_bal}")
+
+        return final_decision
 
 
 if __name__ == "__main__":
