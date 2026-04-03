@@ -1,5 +1,4 @@
-# Author: Chamika Deshan
-# Created: 2026-04-03
+from src.agent.domain.model.action import Action
 
 class DecisionModule:
     """
@@ -10,10 +9,10 @@ class DecisionModule:
         sentiment = sentiment_data.get('sentiment_label')
         
         if sentiment == "BULLISH":
-            decision = "BUY"
+            decision = Action.BUY
             reason = "Positive -> Buy!"
         else:
-            decision = "SELL"
+            decision = Action.SELL
             reason = "Negative -> Sell!"
             
         return {
