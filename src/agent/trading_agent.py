@@ -8,6 +8,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 from src.agent.domain.components.coin_analysis import CoinAnalysisModule
+from src.agent.domain.components.information_retrieval import MockNewsItemModule
 
 class TradingAgent:
        
@@ -15,7 +16,7 @@ class TradingAgent:
         self.init_bal = init_bal
         
         self.market_analyzer = CoinAnalysisModule()
-
+        self.rag_module = MockNewsItemModule()
 
 if __name__ == "__main__":
     agent = TradingAgent(init_bal=1000)
