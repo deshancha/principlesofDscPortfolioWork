@@ -29,7 +29,7 @@ class TradingAgent:
         self.risk_manager = DecisionEvaluateModule()
 
     def analyze_and_trade(self, ticker: str):
-        print(f"Trading - [{ticker}]")
+        print(f"------------------ Trading - [{ticker}] ------------------")
         
         # 1. Analyze
         coin_details = self.market_analyzer.get_coin_details(ticker)
@@ -43,8 +43,9 @@ class TradingAgent:
             coin_details=coin_details,
             balance=self.init_bal
         )
-        
-        return final_decision
+        print(f"Decision: {final_decision['action'].value}")
+        print(f"Buy Amount: ${final_decision['buy_amount']}")
+        print(f"Reason: {final_decision['reason']}")
 
 
 if __name__ == "__main__":
