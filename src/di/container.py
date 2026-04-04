@@ -1,3 +1,4 @@
+
 from dependency_injector import containers, providers
 from core.util import LoggerFactory, ILogger
 from core.data.manager import AwsS3StorageImp, AwsRdsDatabaseImp
@@ -10,8 +11,7 @@ from data_collection.domain.usecases.table_cleanup_usecase import TableCleanupUs
 from data_collection.domain.usecases.fetch_parallel_and_upload_to_s3_usecase import FetchParallelAndUploadToS3UseCase
 from data_collection.domain.usecases.s3_to_rds_usecase import S3ToRDSUseCase
 from data_collection.domain.usecases.rds_to_pandas_usecase import RDSToPandasUseCase
-
-from eda.domain.usecases.data_cleaning_usecase import DataCleaningUseCase
+from data_collection.domain.usecases.data_cleaning_usecase import DataCleaningUseCase
 
 class AppContainer(containers.DeclarativeContainer):
     """
