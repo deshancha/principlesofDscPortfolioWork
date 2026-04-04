@@ -44,7 +44,7 @@ configurations.
 
 ## Dependency Injection
 
-> By using a `dependency`` ``injector` all services instantiated inside
+> By using a `dependency injector` all services instantiated inside
 > `AppContainer`. This ensures dependency flow decouples via interfaces.
 > This would make the atchitecture more future proof and allow mock
 > injection for testing.
