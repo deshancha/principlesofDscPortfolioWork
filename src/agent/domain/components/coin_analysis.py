@@ -19,27 +19,28 @@ class CoinAnalysisModule:
         self.cluster_mapping = {
             "BTC-USD": {
                 "cluster": 2,
-                "volatility": 0.0259,
+                "volatility": 0.025,
                 "mean_return": 0.0008,
+            },
+            "BNB-USD": {
+                "cluster": 2,
+                "volatility": 0.028,
+                "mean_return": 0.0012,
             },
             "ETH-USD": {
                 "cluster": 0,
-                "volatility": 0.0373,
+                "volatility": 0.037,
                 "mean_return": 0.0005,
             },
             "SOL-USD": {
                 "cluster": 0,
-                "volatility": 0.0436,
+                "volatility": 0.043,
                 "mean_return": 0.0006,
             },
-            "BNB-USD": {
-                "cluster": 1,
-                "volatility": 0.0290,
-                "mean_return": 0.0012,
-            },
+            
             "DOGE-USD": {
                 "cluster": 1,
-                "volatility": 0.0508,
+                "volatility": 0.050,
                 "mean_return": 0.0013,
             }
         }
@@ -55,11 +56,11 @@ class CoinAnalysisModule:
         cluster = profile['cluster']
         
         # We use pre calcualted cluster values
-        # BTC - Low , ETH,SOL - Medium, BNB,DOGE - High
-        if profile['volatility'] > 0.045:
+        # BTC, BNB - Low | ETH, SOL - Medium | DOGE - High
+        if profile['volatility'] >= 0.045:
             # Speculative
             risk_cluster = "High"
-        elif profile['volatility'] > 0.035:
+        elif profile['volatility'] >= 0.035:
             # Has Growth
             risk_cluster = "Medium"
         else:

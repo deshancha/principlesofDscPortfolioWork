@@ -24,7 +24,7 @@ class DecisionEvaluateModule:
         
         # Based on cluster we decide the buy percentage
         if cluster_id == 2:
-            # Rise low - BTC
+            # Risk low - BTC, BNB
             buy_percentage = 20
             rationale = "Low Risk -> 20%"
         elif cluster_id == 0:
@@ -32,7 +32,7 @@ class DecisionEvaluateModule:
             buy_percentage = 10
             rationale = "Mid Risk -> 10%"
         elif cluster_id == 1:
-            # Risk high - BNB, DOGE
+            # Risk high - DOGE
             buy_percentage = 1
             rationale = "High Risk -> 1%"
             
