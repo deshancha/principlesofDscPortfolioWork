@@ -51,53 +51,36 @@ configurations.
 
 ## Modularized
 
-## Source is modularized for separate distinct modules. {#source-is-modularized-for-separate-distinct-modules. .unnumbered}
+## Source is modularized for separate distinct modules.
 
-+---------------------+------------------------------------------------+
-| Module Root         | Description                                    |
-+=====================+================================================+
-| **src/core**        | Core components like (AWS S3/RDS Managers),    |
-|                     | utilities like logger, core module formatted   |
-|                     | log strings                                    |
-+---------------------+------------------------------------------------+
-| **sr                | ## Infrastructure laye                         |
-| c/data_collection** | r implementing data fetching, uploading and lo |
-|                     | ading with operations like below defined as us |
-|                     | ecases {#infrastructure-layer-implementing-dat |
-|                     | a-fetching-uploading-and-loading-with-operatio |
-|                     | ns-like-below-defined-as-usecases .unnumbered} |
-|                     |                                                |
-|                     | -   Collect yahoo finance market data          |
-|                     |                                                |
-|                     | -   Upload to AWS S3                           |
-|                     |                                                |
-|                     | -   Download from AWS S3                       |
-|                     |                                                |
-|                     | -   AWS S3 to AWS RDS                          |
-|                     |                                                |
-|                     | -   AWS RDS to Pandas                          |
-|                     |                                                |
-|                     | -   AWS RDS Cleanup                            |
-+---------------------+------------------------------------------------+
-| **src/agent**       | ## Contains the agent wor                      |
-|                     | kflow divided in to function modules as compon |
-|                     | ents {#contains-the-agent-workflow-divided-in- |
-|                     | to-function-modules-as-components .unnumbered} |
-|                     |                                                |
-|                     | -   CoinAnalysisModule                         |
-|                     |                                                |
-|                     | -   MockNewsItemModule                         |
-|                     |                                                |
-|                     | -   DecisionModule                             |
-+---------------------+------------------------------------------------+
+**src/core** 
 
+Core components like (AWS S3/RDS Managers), utilities like logger, core module formatted log strings 
+
+**src/data_collection**
+
+Infrastructure layer implementing data fetching, uploading and loading with operations like below defined as usecases
+
+- Collect yfinance market data
+- Upload to AWS S3
+- Download from AWS S3
+- AWS S3 to AWS RDS
+- AWS RDS to Pandas
+- AWS RDS Cleanup
+
+**src/agent**
+
+Contains the agent workflow divided in to function modules as components
+
+- CoinAnalysisModule
+- MockNewsItemModule
+- DecisionModule
+- DecisionEvaluateModule
 ## Threading
 
 > Pulling large different types of data sets from Yahoo Finance API and
 > transmitting them to AWS S3 introduces delays. By using asynchronous
 > methods increase the transmission time significantly.
-
-##  {#section .unnumbered}
 
 ## Logger
 
@@ -122,10 +105,7 @@ d.  Build and Build - BNB
 
 e.  Dogecoin - DOGE
 
-```{=html}
-<!-- -->
-```
-    Following components has been implemented 
+Following components has been implemented 
 
 1.  Download yfinance tickers configured in “YAHOO_FINANCE_TICKERS” env var between “START_DATE” and “END_DATE” and upload to AWS S3 as json
 
@@ -133,36 +113,17 @@ e.  Dogecoin - DOGE
 
 3.  Load pandas dataframes from AWS RDS configured in “YAHOO_FINANCE_TICKERS”
 
-## Execution with CMD Args  {#execution-with-cmd-args .unnumbered}
+## Execution with CMD Args
 
-    python app.py [arg]
+    python app.py [arg can be -1, 1, 2, 3, 4] 
 
-+----------+------------------+----------------------------------------+
-| Argument | Description      | Action                                 |
-+==========+==================+========================================+
-| `-1`     | Drop/Cleanup     | -   Execute DataCleaningUseCase.       |
-|          | Data             | -   Drops test tables in RDS.          |
-+----------+------------------+----------------------------------------+
-| `1`      | YFinace Put to   | -   Execute                            |
-|          | S3               |     FetchParallelAndUploadToS3UseCase  |
-|          |                  | -   Fetch Yahoo Finance data from      |
-|          |                  |     specified `.env` tickers           |
-|          |                  |     asynchronously and put the raw     |
-|          |                  |     JSON into AWS S3.                  |
-+----------+------------------+----------------------------------------+
-| `2`      | S3 to RDS        | -   Execute S3ToRDSUseCase             |
-|          |                  | -   Pulls the JSON from AWS S3.        |
-|          |                  | -   Structures them into relational    |
-|          |                  |     data format                        |
-|          |                  | -   Save to AWS RDS relational         |
-|          |                  |     database table                     |
-+----------+------------------+----------------------------------------+
-| `3`      | Extract to       | -   Execute RDSToPandasUseCase         |
-|          | Pandas           | -   Extracts market data from AWS RDS  |
-|          |                  | -   Load them to Pandas DataFrame      |
-+----------+------------------+----------------------------------------+
+-1 : Drop/Cleanup Data
 
-##  {#section-1 .unnumbered}
+1 : YFinace Put to S3
+
+2 : S3 to RDS
+
+3 : Extract to Pandas
 
 ## EDA - Data Cleaning
 
@@ -217,9 +178,9 @@ b.  Medium Risk
 
 c.  Low Risk
 
-## Result {#result .unnumbered}
 
-## Crypto Coins Volatility {#crypto-coins-volatility .unnumbered}
+
+## Crypto Coins Volatility
 
 BTC -- 0.025 Lowest STD Daily Close (Lowest Volatility)\
 BNB -- 0.028 Very Low Volatility\
@@ -227,7 +188,7 @@ ETH -- 0.037 Moderate Volatility\
 SOL -- 0.043 High Volatility\
 DOGE -- 0.05 Highest Volatility
 
-##   Crypto Coins Clusters  {#crypto-coins-clusters .unnumbered}
+##   Crypto Coins Clusters 
 
 1.  Low Risk -- BTC and BNB
 
