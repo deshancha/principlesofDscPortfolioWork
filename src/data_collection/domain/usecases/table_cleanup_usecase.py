@@ -21,7 +21,6 @@ class TableCleanupUseCase:
                 conn.commit()
             
             self.logger.info(LogMessages.RDS_CLEANUP_OK.format(table_name=table_name))
-            print(f"Table {table_name} dropped!")
         except Exception as e:
             self.logger.error(LogMessages.RDS_CREATE_TABLE_ERROR.format(error=str(e)))
             raise e
