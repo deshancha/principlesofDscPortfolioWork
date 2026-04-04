@@ -29,7 +29,8 @@ def fetch_and_upload_to_s3():
     data_container = DataCollectionContainer(core=core_container)
     collect_usecase = data_container.collect_market_data_usecase()
     
-    ticker = os.environ.get("YAHOO_FINANCE_TICKER", "")
+    tickers_env = os.environ.get("YAHOO_FINANCE_TICKERS", "")
+    ticker = tickers_env.split(",")[0].strip() if tickers_env else ""
     start_date = os.environ.get("START_DATE", "")
     end_date = os.environ.get("END_DATE", "")
 

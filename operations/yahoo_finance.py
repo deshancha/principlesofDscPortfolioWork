@@ -24,7 +24,8 @@ def fetch_yahoo_finance_data():
     collect_usecase = data_container.collect_market_data_usecase()
     
     # Read config from environment variable
-    ticker = os.environ.get("YAHOO_FINANCE_TICKER", "")
+    tickers_env = os.environ.get("YAHOO_FINANCE_TICKERS", "")
+    ticker = tickers_env.split(",")[0].strip() if tickers_env else ""
     start_date = os.environ.get("START_DATE", "")
     end_date = os.environ.get("END_DATE", "")
 

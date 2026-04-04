@@ -12,6 +12,8 @@ from src.agent.domain.components.information_retrieval import MockNewsItemModule
 from src.agent.domain.components.decision_module import DecisionModule
 from src.agent.domain.components.dicision_evaluate import DecisionEvaluateModule
 from src.agent.domain.model.action import Action
+from src.agent.messages import AgentMessages
+from operations.config import get_container
 
 class TradingAgent:
        
@@ -27,9 +29,12 @@ class TradingAgent:
         # decision module
         self.decision_engine = DecisionModule()
         self.risk_manager = DecisionEvaluateModule()
+        
+        core_container = get_container()
+        self.logger = core_container.logger()
 
     def analyze_and_trade(self, ticker: str):
-        print(f"------------------ Trading - [{ticker}] ------------------")
+        self.logger.info(AgentMessages.AGENT_START.format(ticker=ticker))
         
         # 1. Analyze
         coin_details = self.market_analyzer.get_coin_details(ticker)
@@ -45,12 +50,12 @@ class TradingAgent:
         )
 
         buy_amount = final_decision['buy_amount']
-        print(f"Decision: {final_decision['action'].value}")
-        print(f"Buy Amount: ${buy_amount}")
-        print(f"Reason: {final_decision['reason']}")
+        self.logger.info(AgentMessages.DECISION.format(action=final_decision['action'].value))
+        self.logger.info(AgentMessages.BUY_AMOUNT.format(amount=buy_amount))
+        self.logger.info(AgentMessages.REASON.format(reason=final_decision['reason']))
 
         if final_decision['action'] == Action.BUY:
             self.init_bal -= buy_amount
-            print(f"Balance : {self.init_bal}")
+            self.logger.info(AgentMessages.BALANCE.format(balance=self.init_bal))
 
         return final_decision
